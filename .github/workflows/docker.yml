@@ -1,0 +1,31 @@
+name: Docker Multi-Stage CI
+
+on:
+  push:
+    branches:
+      - [cite_start]main [cite: 15]
+      - [cite_start]dev [cite: 16]
+
+jobs:
+  build-process:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Login ke Docker Hub hanya jika push ke branch main 
+      - name: Login to Docker Hub
+        if: github.ref == 'refs/heads/main'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Build image (Berjalan di branch dev dan main) [cite: 8, 9]
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/dtp-app:latest .
+
+      # Push ke Docker Hub hanya jika push ke branch main 
+      - name: Push to Docker Hub
+        if: github.ref == 'refs/heads/main'
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/dtp-app:latest
