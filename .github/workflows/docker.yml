@@ -23,9 +23,9 @@ jobs:
 
       # Build image (Berjalan di branch dev dan main) [cite: 8, 9]
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/dtp-app:latest .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/self-project-dtp:latest .
 
       # Push ke Docker Hub hanya jika push ke branch main 
       - name: Push to Docker Hub
         if: github.ref == 'refs/heads/main'
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/dtp-app:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/self-project-dtp:latest
