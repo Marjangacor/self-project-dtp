@@ -3,8 +3,8 @@ name: Docker Multi-Stage CI
 on:
   push:
     branches:
-      - [cite_start]main [cite: 15]
-      - [cite_start]dev [cite: 16]
+      - main
+      - dev
 
 jobs:
   build-process:
